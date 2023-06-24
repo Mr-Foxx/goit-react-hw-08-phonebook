@@ -1,34 +1,62 @@
-import { Countainer } from './Styles/Countainer';
-import { TitleContact, TitlePhone } from './Styles/Titles';
-import { Contacts } from './Contacts/Contacts';
-import { Form } from './Form/Form';
-import { Filter } from './Filter/Filter';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Home } from 'pages/Home';
+import { LoginUser } from 'pages/LoginUser';
+import { PhoneBook } from 'pages/PhoneBook';
+import { RegisterUser } from 'pages/RegisterUser';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from './Layout';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchContacts } from 'Redux/contactOperations';
+import { refreshUser } from 'Redux/auth/operations';
+import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+import { PublicRoute } from './PublicRoute/PublicRoute';
+import { useAuth } from 'Redux/auth/useAuth';
+import { Loader } from '../components/Loader/Loader';
 
-export function App() {
+
+export const App = () => {
+  const { isRefreshing } = useAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <Countainer>
-      <ToastContainer autoClose={1000} />
+  return isRefreshing ? (
+    <Loader />
+  ) : (
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />}></Route>
 
-      <TitlePhone>Phonebook</TitlePhone>
+          <Route
+            path="contacts"
+            element={
+              <PrivateRoute
+                redirectTo={'/contacts'}
+                component={<PhoneBook />}
+              />
+            }
+          />
 
-      <Form />
+          <Route
+            path="login"
+            element={
+              <PublicRoute redirectTo={'/contacts'} component={<LoginUser />} />
+            }
+          />
 
-      <TitleContact>Contacts</TitleContact>
-
-      <Filter title="Find contacts by name" />
-
-      <Contacts />
-    </Countainer>
+          <Route
+            path="register"
+            element={
+              <PublicRoute
+                redirectTo={'/contacts'}
+                component={<RegisterUser />}
+              />
+            }
+          />
+        </Route>
+      </Routes>
+    </>
   );
-}
+};

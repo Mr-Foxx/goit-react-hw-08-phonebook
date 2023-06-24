@@ -1,7 +1,7 @@
 import { FilterTitle, FilterIntput } from './Filter.styled';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { handleFindContact } from 'Redux/filterContactsSlice';
+import { handleFindContact } from 'Redux/contacts/filterContactsSlice';
 
 export const Filter = ({ title }) => {
   const dispatch = useDispatch();

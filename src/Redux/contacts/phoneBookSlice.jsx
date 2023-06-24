@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import { nanoid } from 'nanoid';
 // import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { fetchContacts, addContact, deleteContact } from './contactOperations';
 
 const phoneBookSlice = createSlice({
@@ -56,8 +56,6 @@ const phoneBookSlice = createSlice({
     },
   },
 });
-
-// export const { addNewContact, deleteContact } = phoneBookSlice.actions;
 
 export const phoneBookReducer = phoneBookSlice.reducer;
 
