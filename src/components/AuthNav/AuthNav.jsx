@@ -1,17 +1,29 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import style from '../Styles/AuthNav.module.css';
+import {
+  AuthNavList,
+  AuthNavItem,
+  NavLink,
+  theme,
+} from '../Styles/AuthNav.style';
+import { Typography } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 
 export const AuthNav = () => {
   return (
-    <ul className={style.authNavList}>
-      <li className={style.authNavItem}>
-        <NavLink to="login">Login</NavLink>
-      </li>
+    <ThemeProvider theme={theme}>
+      <AuthNavList>
+        <AuthNavItem>
+          <NavLink to="login">
+            <Typography variant="h6">Login</Typography>
+          </NavLink>
+        </AuthNavItem>
 
-      <li className={style.authNavItem}>
-        <NavLink to="register ">Registration</NavLink>
-      </li>
-    </ul>
+        <AuthNavItem>
+          <NavLink to="register ">
+            <Typography variant="h6">Registration</Typography>
+          </NavLink>
+        </AuthNavItem>
+      </AuthNavList>
+    </ThemeProvider>
   );
 };

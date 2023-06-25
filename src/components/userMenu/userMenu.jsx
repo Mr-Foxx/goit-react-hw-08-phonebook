@@ -1,8 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../Redux/auth/useAuth';
 import { logOutUser } from 'Redux/auth/operations';
-import style from '../Styles/UserMenu.module.css';
 import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  UserName,
+  LogoutBtn,
+} from 'components/Styles/UserMenu.style';
+import { Typography } from '@mui/material';
 
 export const UserMenu = () => {
   const { user } = useAuth();
@@ -15,11 +20,11 @@ export const UserMenu = () => {
     navigate('/');
   };
   return (
-    <div className={style.container}>
-      <p className={style.userName}>{user.email}</p>
-      <button className={style.logoutBtn} onClick={handleClickLogOut}>
-        Logout
-      </button>
-    </div>
+    <Container>
+      <UserName>{user.email}</UserName>
+      <LogoutBtn onClick={handleClickLogOut}>
+        <Typography variant="h6">Logout</Typography>
+      </LogoutBtn>
+    </Container>
   );
 };

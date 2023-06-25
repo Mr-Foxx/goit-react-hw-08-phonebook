@@ -1,26 +1,38 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useAuth } from 'Redux/auth/useAuth';
-import style from '../components/Styles/Layout.module.css';
+import { Typography } from '@mui/material';
 import { AuthNav } from './AuthNav/AuthNav';
 import { UserMenu } from './userMenu/userMenu';
+import {
+  Header,
+  NavLinkContainer,
+  NavLink,
+  theme,
+} from './Styles/Layout.style';
+import { ThemeProvider } from '@mui/material/styles';
 
 export const Layout = () => {
   const { isLoggedIn } = useAuth();
+
   return (
     <>
-      <header className={style.header}>
-        <div className={style.container}>
-          <NavLink to="/">HOME</NavLink>
+      <ThemeProvider theme={theme}>
+        <Header>
+          <NavLinkContainer>
+            <NavLink to="/">
+              <Typography variant="h6">HOME</Typography>
+            </NavLink>
 
-          {isLoggedIn && (
-            <>
-              <NavLink to="contacts">Phonebook</NavLink>
-            </>
-          )}
-        </div>
+            {isLoggedIn && (
+              <NavLink to="/contacts">
+                <Typography variant="h6">Phonebook</Typography>
+              </NavLink>
+            )}
+          </NavLinkContainer>
 
-        <nav>{isLoggedIn ? <UserMenu /> : <AuthNav />}</nav>
-      </header>
+          <nav>{isLoggedIn ? <UserMenu /> : <AuthNav />}</nav>
+        </Header>
+      </ThemeProvider>
       <Outlet />
     </>
   );
